@@ -10,8 +10,8 @@ export default function ApiDocumentation() {
   "email": "joao.silva@email.com",
   "origem": "Site Imobiliária",
   "empresaId": "ID_DA_EMPRESA",
-  "imovel": {
-    "id": "prop-1",
+  "dados": {
+    "imovelId": "prop-1",
     "titulo": "Cobertura Duplex Jardins",
     "valor": "R$ 4.200.000"
   }

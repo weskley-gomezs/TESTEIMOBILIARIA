@@ -20,8 +20,8 @@ async function enviarLeadParaSisteNext(leadData) {
     email: leadData.email,
     origem: "Site Imobiliária",
     empresaId: "SUA_EMPRESA_ID",
-    imovel: {
-      id: leadData.imovelId,
+    dados: {
+      imovelId: leadData.imovelId,
       titulo: leadData.imovelTitulo,
       valor: leadData.imovelValor
     }

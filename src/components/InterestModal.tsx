@@ -60,8 +60,8 @@ export default function InterestModal({ property, onClose }: InterestModalProps)
       email: email.trim().toLowerCase(),
       origem: "Site Imobiliária",
       empresaId: EMPRESA_ID,
-      imovel: {
-        id: property.id,
+      dados: {
+        imovelId: property.id,
         titulo: property.titulo,
         valor: formatPrice(property.valor)
       }
@@ -70,7 +70,6 @@ export default function InterestModal({ property, onClose }: InterestModalProps)
     setSentPayload(payload);
 
     try {
-      // Perform the actual POST request as requested by the user
       const response = await fetch('https://sistenext.vercel.app/api/leads', {
         method: 'POST',
         headers: {
@@ -79,19 +78,18 @@ export default function InterestModal({ property, onClose }: InterestModalProps)
         body: JSON.stringify(payload),
       });
 
-      // Even if the endpoint doesn't exist yet in the front-end-only preview,
-      // we show the success screen since the frontend logic executed correctly!
-      if (!response.ok) {
-        console.warn('POST https://sistenext.vercel.app/api/leads returned status:', response.status);
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitted(true);
+      } else {
+        setApiError(result.message || 'Ocorreu um erro ao enviar seu interesse. Tente novamente.');
       }
     } catch (err: any) {
-      console.warn('Fetch to https://sistenext.vercel.app/api/leads failed. Showing simulated success for SisteNext integration demonstration:', err.message);
+      setApiError('Falha na conexão com o servidor. Verifique sua internet e tente novamente.');
+      console.error('API Error:', err);
     } finally {
-      // Ensure the demonstration is fully operational and shows interest sent successfully
-      setTimeout(() => {
-        setLoading(false);
-        setSubmitted(true);
-      }, 80000); // Wait 800ms for a premium loading effect
+      setLoading(false);
     }
   };
 
@@ -187,6 +185,14 @@ export default function InterestModal({ property, onClose }: InterestModalProps)
                 />
               </div>
 
+              {/* Error Message */}
+              {apiError && (
+                <div className="rounded-xl bg-red-50 border border-red-100 p-3 text-xs text-red-700 flex gap-2 items-center">
+                  <AlertCircle className="h-4 w-4 shrink-0" />
+                  <span>{apiError}</span>
+                </div>
+              )}
+
               {/* Submit Button */}
               <button
                 type="submit"
@@ -218,10 +224,10 @@ export default function InterestModal({ property, onClose }: InterestModalProps)
               
               <div>
                 <h4 className="font-sans text-lg font-bold text-slate-900">
-                  Interesse enviado com sucesso.
+                  Interesse enviado com sucesso!
                 </h4>
                 <p className="mt-1.5 text-xs text-slate-500 font-light max-w-sm mx-auto">
-                  A simulação de envio foi realizada com êxito. O CRM SisteNext recebeu os seguintes dados integrados:
+                  Em breve um corretor entrará em contato.
                 </p>
               </div>
 

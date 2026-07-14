@@ -21,8 +21,8 @@ export interface LeadPayload {
   email: string;
   origem: string;
   empresaId: string;
-  imovel: {
-    id: string;
+  dados: {
+    imovelId: string;
     titulo: string;
     valor: string;
   };
