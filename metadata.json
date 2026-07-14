@@ -1,0 +1,6 @@
+{
+  "name": "Imobiliária SisteNext",
+  "description": "Site modelo de imobiliária premium integrado para envio de leads à API do CRM SisteNext.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
